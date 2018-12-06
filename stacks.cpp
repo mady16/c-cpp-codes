@@ -6,14 +6,16 @@ can only be done from the last position of the stack (what we call the top)
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
 using namespace std;
 
+template <typename T> //passing the data type as a parameter
 class Stack {
 
     private:
 
         int size, top;
-        float * stack;
+        T * stack; //array storing the stack data
 
     public:
 
@@ -21,7 +23,7 @@ class Stack {
 
             size = n;
             top = -1;
-            stack = new float [size]; //dynamically allocating array
+            stack = new T [size]; //dynamically allocating array
         }
 
         ~Stack () { //class destructor
@@ -29,15 +31,15 @@ class Stack {
             delete [] stack;
         }
 
-        void push (int e) {
+        void push (T e) {
 
-            if (top == size - 1) cout << "Stack is full" << endl;
+            if (is_full()) cout << "Stack is full." << endl;
             else stack[++top] = e;
         }
 
         void pop () {
 
-            if (is_empty()) cout << "Stack is empty" << endl;
+            if (is_empty()) cout << "Stack is empty.    " << endl;
             else top -= 1;
         }
 
@@ -46,22 +48,21 @@ class Stack {
             return (top == -1);
         }
 
-        int top_element () {
+        bool is_full () {
 
-            if (is_empty()) {
-                cout << "Stack is empty: ";
-                return (-1);
-            }
-            else return stack[top];
+            return (top == size-1);
         }
 
-        int element_at (int pos) {
+        T top_element () {
 
-            if (is_empty()) {
-                cout << "Stack is empty: ";
-                return (-1);
-            }
-            else return stack[pos];
+            if (is_empty()) cout << "Stack is empty. ";
+            return stack[top];
+        }
+
+        T element_at (int pos) {
+
+            if (is_empty()) cout << "Stack is empty. ";
+            return stack[pos-1];
         }
 
         void print () {
@@ -75,7 +76,7 @@ class Stack {
 int main (){
 
     int stack_size = 10;
-    Stack stack (stack_size);
+    Stack <float> stack (stack_size); //specifying the type of the elements in the stack
 
     srand(time(NULL)); //seeds the pseudo-random number generator
 
@@ -87,6 +88,18 @@ int main (){
     cout << "Calling the pop function... " << endl;
     stack.pop();
     stack.print();
+
+    cout << endl;
+
+    string str1 ("Hello");
+    string str2 ("World");
+    Stack <string> string_stack (2);
+    string_stack.push(str1);
+    string_stack.push(str2);
+    string_stack.print();
+
+    Stack <string> stack1 (3);
+    stack1.element_at(1); //as the stack is empty it will return trash.
 
     return (0);
 }
