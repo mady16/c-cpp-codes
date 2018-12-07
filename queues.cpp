@@ -16,7 +16,6 @@ class Queue {
             size = n;
             queue = new T [size];
             tail = -1;
-
         }
 
         ~Queue () {
