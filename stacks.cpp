@@ -37,10 +37,11 @@ class Stack {
             else stack[++top] = e;
         }
 
-        void pop () {
+        T pop () {
 
             if (is_empty()) cout << "Stack is empty.    " << endl;
             else top -= 1;
+	    return stack[top+1];
         }
 
         bool is_empty () {
@@ -67,6 +68,7 @@ class Stack {
 
         void print () {
 
+            if (is_empty()) cout << "Stack is empty. ";
             for (int i=0; i<=top; i++) cout << stack[i] << " ";
             cout << endl;
         }
@@ -85,8 +87,7 @@ int main (){
     stack.print();
     cout << "Element at position (3): " << stack.element_at(3) << endl;
     cout << "Element at top: " << stack.top_element() << endl;
-    cout << "Calling the pop function... " << endl;
-    stack.pop();
+    cout << "Calling the pop function... " << stack.pop() << endl;
     stack.print();
 
     cout << endl;
