@@ -74,7 +74,6 @@ class n_matrix {
                         T temp = matrix[i][j];
                         matrix[i][j] = matrix[j][i];
                         matrix[j][i] = temp;
-                        cout << "entre" << endl;
                     }
                 }
         }
