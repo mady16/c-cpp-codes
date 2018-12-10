@@ -68,13 +68,11 @@ class n_matrix {
         void invert_triangular () {
 
             for (int i=0; i<rows; i++)
-                for (int j=0; j<columns; j++) {
+                for (int j=0; j<i; j++) {
 
-                    if (j < i) {
-                        T temp = matrix[i][j];
-                        matrix[i][j] = matrix[j][i];
-                        matrix[j][i] = temp;
-                    }
+                    T temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
                 }
         }
 
