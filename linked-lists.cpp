@@ -4,13 +4,21 @@ using namespace std;
 //each of the nodes of our list is a class
 template <class T> class node {
 
-    public:
+    private:
 
         T data;
+
+    public:
+
         node <T> *next;
 
         node(): data(NULL), next(NULL) {}
         node(T x): data(x), next(NULL) {}
+
+        T get_data () {
+
+            return (data);
+        }
 };
 
 template <class T> class list {
@@ -23,23 +31,68 @@ template <class T> class list {
 
         list(): head(NULL), p(NULL), last(NULL), previous(NULL) {}
 
+        ~list () {
+
+            node <T> *n;
+            for (p = head; p != NULL; p = p->next) {
+
+                n = p->next;
+                delete (p);
+                p = n;
+            }
+            delete (n);
+            cout << "list destroyed." << endl;
+        }
+
+        //inserts a node at the begining of the list
         void push (T x) {
 
             p = new node <T> (x);
-            p.next = head;
-            head = p;
+
+            if (head == NULL) {
+
+                head = p;
+                last = head;
+            }
+            else {
+
+                last->next = p;
+                last = p;
+            }
+
         }
 
+        void print () {
+
+            for (p = head; p != NULL; p = p->next)
+                cout << p.get_data();
+        }
+
+        int size () {
+
+            int size = 0;
+            for (p = head; p != NULL; size++, p = p->next);
+            return (size);
+        }
+
+        T operator [] (int index) {
+
+            int i;
+            for (i=0, p = head; i < index; p = p->next, i++);
+            return (p->get_data());
+        }
 };
 
 int main () {
 
-    node <int> *a = new node <int> (1);
-    node <int> *b = new node <int> (2);
-    node <int> *c = new node <int> (3);
+    list <int> l;
+    l.push(350);
+    l.push(5);
+    l.push(19);
+    l.push(4);
 
-    a->next = b;
-    b->next = c;
+    cout << l[2] << endl;
+    cout << "size of the list: " << l.size() << endl;
 
 
     return (0);
