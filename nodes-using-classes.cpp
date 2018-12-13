@@ -1,3 +1,7 @@
+/*
+Linked list using node class
+*/
+
 #include <iostream>
 using namespace std;
 
