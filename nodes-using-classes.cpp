@@ -19,6 +19,11 @@ template <class T> class node {
         node(): data(NULL), next(NULL) {}
         node(T x): data(x), next(NULL) {}
 
+        ~node () {
+
+            delete next;
+        }
+
         void set (T value) {
 
             data = value;
@@ -56,6 +61,7 @@ int main () {
 
     print(a);
 
+    delete a;
 
     return (0);
 }
