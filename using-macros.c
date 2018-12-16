@@ -12,16 +12,16 @@ float area (float l);
 int main () {
 	
 	float r = 0.5;
-	printf ("Perimeter of the circle: %0.5f\n", perimeter (r));  
-	printf ("Area of the circle: %0.5f\n", area (r));
+	printf ("Perimeter of the circle: %.5f\n", perimeter (r));  
+	printf ("Area of the circle: %.5f\n", area (r));
 	
 	//Removing macros
 	#undef perimeter
 	#undef area
 	
 	//Macros are removed and the defined functions are called
-	printf ("Perimeter of the square: %0.5f\n", perimeter (r));  
-	printf ("Area of the square: %0.5f\n", area (r));
+	printf ("Perimeter of the square: %.5f\n", perimeter (r));  
+	printf ("Area of the square: %.5f\n", area (r));
 	
 	return (0);
 }
