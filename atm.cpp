@@ -2,6 +2,8 @@
 #include <math.h>
 using namespace std;
 
+#define N 3
+
 class banknotes {
 
     private:
@@ -30,11 +32,28 @@ class banknotes {
         }
 };
 
+void return_money (banknotes *cash, int *dispensed) {
+
+    for (int i=0; i < N; i++)
+        cash[i].set_quantity(cash[i].get_quantity() + dispensed[i]);
+}
+
+
+int total_cash (banknotes *cash) {
+
+    int total = 0;
+
+    for (int i=0; i<N; i++)
+        total += cash[i].get_face_value() * cash[i].get_quantity();
+
+    return (total);
+}
+
 void dispense_money (int money, banknotes *cash) {
 
-    int dispensed[3] = {0, 0, 0};
+    int dispensed[N] = {0, 0, 0};
 
-    for (int i=0; money > 0; i++) {
+    for (int i=0; money > 0 && i < N; i++) {
 
         dispensed[i] = floor (money / cash[i].get_face_value());
         if (dispensed[i] > cash[i].get_quantity ())
@@ -44,35 +63,48 @@ void dispense_money (int money, banknotes *cash) {
         cash[i].set_quantity (cash[i].get_quantity() - dispensed[i]);
     }
 
-    for (int i=0; i < 3; i++) {
+    if (money > 0) {
 
-        if (dispensed[i] != 0) {
+        return_money(cash, dispensed);
+        cout << "ATM doesn't have notebanks to dispense that money" << endl;
+    }
 
-            if (dispensed[i] == 1)
-                cout << dispensed[i] << " notebank of " << cash[i].get_face_value() << " COP" << endl;
-            else
-                cout << dispensed[i] << " notebanks of " << cash[i].get_face_value() << " COP" << endl;
+    else {
 
+        for (int i=0; i < N; i++) {
+
+            if (dispensed[i] != 0) {
+
+                if (dispensed[i] == 1)
+                    cout << dispensed[i] << " notebank of " << cash[i].get_face_value() << " COP" << endl;
+                else
+                    cout << dispensed[i] << " notebanks of " << cash[i].get_face_value() << " COP" << endl;
+
+            }
         }
     }
+
+    cout << "Total cash: " << total_cash(cash) << endl;
 }
 
-int total_cash (banknotes *cash) {
+bool possible (int money, banknotes *cash) {
 
-    int total = 0;
+    bool flag = false;
+    for (int i=0; i < N; i++)
+        if (money % cash[i].get_face_value() == 0 && cash[i].get_quantity() != 0)
+            flag = true;
 
-    for (int i=0; i<3; i++)
-        total += cash[i].get_face_value() * cash[i].get_quantity();
-
-    return (total);
+    return (flag);
 }
 
 int main () {
 
-    banknotes cash[3];
+    banknotes cash[N];
     cash[0] = banknotes (50, 3);
-    cash[1] = banknotes (20, 2);
+    cash[1] = banknotes (20, 3);
     cash[2] = banknotes (10, 3);
+
+    cout << "Total cash: " << total_cash(cash) << endl;
 
     int money;
 
@@ -80,8 +112,8 @@ int main () {
         cout << "How much money do you want?" << endl;
         cin >> money;
 
-        if (money % 10 != 0)
-            cout << "Invalid value, multiples of 10" << endl;
+        if (!possible(money, cash))
+            cout << "ATM doesn't have notebanks to dispense that money" << endl;
         else {
 
             if (money > total_cash(cash))
