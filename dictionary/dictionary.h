@@ -1,5 +1,8 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
+
+string delete_spaces (string data);
 
 template <class T> class Dictionary {
    
@@ -23,6 +26,24 @@ template <class T> class Dictionary {
       keys = new string [size];
       values = new T [size];
    }
+
+   Dictionary (string data) {
+      this->size = 10e5;
+      top = -1;
+      keys = new string [size];
+      values = new T [size];
+
+      cout << data << endl;
+      data = delete_spaces (data);
+      cout << data << endl;
+
+      for (int i=0; i<data.length (); i++) {
+         int pos = data.find (":");
+         string str = data.substr (i, pos);
+         int j = pos + 1;
+         cout << "str = " << str << endl;
+      }
+   }
    
    //DESTRUCTOR
    ~Dictionary () {
@@ -43,9 +64,7 @@ template <class T> class Dictionary {
    }
 
    void print () {
-      
-      if (is_empty ()) cout << "Dictionary is empty" << endl;
-      
+            
       cout << "Dictionary: {" << endl;
       for (int i=0; i<=top; i++)
          cout << "  " << "[\"" << keys[i] << "\"] = " << values[i] << endl;
@@ -80,7 +99,7 @@ template <class T> class Dictionary {
       else top -= 1;
    }
 
-   void remove (string key) {
+   void remove_item (string key) {
 
       int index = search (key);
 
@@ -91,11 +110,9 @@ template <class T> class Dictionary {
       top--;
    }
 
-   T operator = (T data) {
-
-      this = data;
-      return *this;
-   } 
+   void clear () {
+      top = -1;
+   }
 
    T operator [] (string key) {
 
@@ -122,3 +139,10 @@ template <class T> class Dictionary {
       else return (-1);
    }
 };
+
+string delete_spaces (string str) {
+
+   string new_data;
+   str.erase (remove (str.begin (), str.end (), ' '), str.end ()); 
+   return (str.substr (1, str.length () - 2));
+}
