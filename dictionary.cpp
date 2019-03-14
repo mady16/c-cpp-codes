@@ -30,16 +30,6 @@ template <class T> class Dictionary {
       delete []values;
    }
 
-   void push (string key, T value) {
-
-      if (is_full ()) cout << "Dictionary is full" << endl;
-
-      else {
-         keys[++top] = key;
-         values[top] = value; 
-      }  
-   }
-
    int length () {
       return (top + 1);
    }
@@ -61,6 +51,45 @@ template <class T> class Dictionary {
          cout << "  " << "[\"" << keys[i] << "\"] = " << values[i] << endl;
       cout << "}" << endl;   
    }
+
+   T get (string key) {
+
+      int index = search (key);
+      return (values [index]);
+   }
+
+   bool exists (string key) {
+
+      int index = search (key);
+      return (index != -1);
+   }
+
+   void push (string key, T value) {
+
+      if (is_full ()) cout << "Dictionary is full" << endl;
+
+      else {
+         keys[++top] = key;
+         values[top] = value; 
+      }  
+   }
+
+   void pop (string key) {
+
+      int index = search (key);
+
+      for (int i=index; i<top; i++) {
+         keys [i] = keys [i+1];
+         values [i] = values [i+1];
+      }
+      top--;
+   }
+
+   T operator = (T data) {
+
+      this = data;
+      return *this;
+   } 
 
    T operator [] (string key) {
 
@@ -93,11 +122,17 @@ int main () {
    Dictionary <int> dict (3);
    dict.push ("Simon", 25);
    dict.push ("Maria", 19);
+   dict.push ("Dilian", 54);
    
    cout << "Size of the dictionary: " << dict.length() << endl;
    cout << "Dictionary: ";
    dict.print ();
-   cout << dict ["Simon"];
+   cout << "dict [\"Simon\"] = " << dict ["Simon"] << endl;
+   cout << "dict.get (\"Maria\") = " << dict.get ("Maria") << endl;
+   cout << dict.exists ("Dilian") << endl;
+   dict.pop ("Simon");
+   cout << "Dictionary: ";
+   dict.print ();
 
    return (0);
 }
