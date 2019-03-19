@@ -1,5 +1,7 @@
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 string delete_spaces (string data);
@@ -33,16 +35,38 @@ template <class T> class Dictionary {
       keys = new string [size];
       values = new T [size];
 
-      cout << data << endl;
-      data = delete_spaces (data);
-      cout << data << endl;
+      string trim_data = delete_spaces (data);
+      int n = trim_data.length ();
+      char result [n + 1]; 
+      bool is_key = true;
+      string key, value;
+      strcpy (result, trim_data.c_str());
 
-      for (int i=0; i<data.length (); i++) {
-         int pos = data.find (":");
-         string str = data.substr (i, pos);
-         int j = pos + 1;
-         cout << "str = " << str << endl;
-      }
+      cout << result << endl;
+
+
+      // for (int i=0; i<data.length (); i++) {
+
+      //    cout << "key = " << key;
+      //    cout << "value = " << value;
+
+      //    while (is_key) {
+      //       if (data.at(i) == ":") {
+      //          is_key = false;
+      //          value.clear ();
+      //       }
+      //       else {
+
+      //          while (is_key) {
+      //             key.append (data[i]);
+      //          }
+
+      //          while (!is_key) {
+      //             value-append (data[i]);
+      //          }
+      //       }
+      //    }
+      // }
    }
    
    //DESTRUCTOR
