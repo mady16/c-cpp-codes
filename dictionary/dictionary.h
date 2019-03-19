@@ -42,6 +42,7 @@ template <class T> class Dictionary {
       string key, value;
       strcpy (result, trim_data.c_str());
 
+      //string to process
       cout << result << endl;
 
 
